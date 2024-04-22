@@ -6,16 +6,16 @@
  */
 
 import React from 'react';
-import {SafeAreaView, StatusBar, Text} from 'react-native';
+import {SafeAreaView, StatusBar, Text, View} from 'react-native';
 import {ProductsScreen} from './src/screens/ProductsScreen';
 import { ProductDetailsScreen } from './src/screens/ProductDetailsScreen';
 
 function App(): React.JSX.Element {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <StatusBar />
       <ProductDetailsScreen />
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -2,6 +2,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,9 +15,14 @@ import products from '../data/products';
 export const ProductDetailsScreen = () => {
   const product = products[0];
   const {width} = useWindowDimensions();
+
+  const addToCart = () => {
+    console.log('Add to cart');
+  }
+
   return (
     <View>
-      <ScrollView>
+      <ScrollView  style={{paddingBottom: 400}}>
         <FlatList
           data={product.images}
           renderItem={({item}) => (
@@ -33,8 +39,9 @@ export const ProductDetailsScreen = () => {
           <Text style={styles.description}>{product.description}</Text>
         </View>
       </ScrollView>
-
-      {/* <Image source={{uri: product.image}} style={styles.image} /> */}
+      <Pressable style={styles.button} onPress={addToCart}>
+        <Text style={styles.buttonText}>Add to cart</Text>
+      </Pressable>
     </View>
   );
 };
@@ -58,5 +65,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 30,
     fontWeight: '300',
+    marginBottom: 100,
+  },
+  button: {
+    position: 'absolute',
+    bottom: 30,
+    width: '90%',
+    backgroundColor: 'black',
+    alignItems: 'center',
+    alignSelf: 'center',
+    padding: 20,
+    borderRadius: 100,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: '500',
   },
 });
