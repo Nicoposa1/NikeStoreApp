@@ -10,13 +10,15 @@ import {SafeAreaView, StatusBar, Text, View} from 'react-native';
 import {ProductsScreen} from './src/screens/ProductsScreen';
 import {ProductDetailsScreen} from './src/screens/ProductDetailsScreen';
 import {ShoppingCartScreen} from './src/screens/ShoppingCartScreen';
+import { Navigator } from './src/navigation';
 
 function App(): React.JSX.Element {
   return (
     <View style={{flex: 1}}>
       <StatusBar />
       {/* <ProductDetailsScreen /> */}
-      <ShoppingCartScreen />
+      {/* <ShoppingCartScreen /> */}
+      <Navigator />
     </View>
   );
 }
