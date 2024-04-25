@@ -10,16 +10,20 @@ import {SafeAreaView, StatusBar, Text, View} from 'react-native';
 import {ProductsScreen} from './src/screens/ProductsScreen';
 import {ProductDetailsScreen} from './src/screens/ProductDetailsScreen';
 import {ShoppingCartScreen} from './src/screens/ShoppingCartScreen';
-import { Navigator } from './src/navigation';
+import {Navigator} from './src/navigation';
+import {Provider} from 'react-redux';
+import { store } from './src/store';
 
 function App(): React.JSX.Element {
   return (
-    <View style={{flex: 1}}>
-      <StatusBar />
-      {/* <ProductDetailsScreen /> */}
-      {/* <ShoppingCartScreen /> */}
-      <Navigator />
-    </View>
+    <Provider store={store}>
+      <View style={{flex: 1}}>
+        <StatusBar />
+        {/* <ProductDetailsScreen /> */}
+        {/* <ShoppingCartScreen /> */}
+        <Navigator />
+      </View>
+    </Provider>
   );
 }
 
