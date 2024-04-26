@@ -19,8 +19,6 @@ function App(): React.JSX.Element {
     <Provider store={store}>
       <View style={{flex: 1}}>
         <StatusBar />
-        {/* <ProductDetailsScreen /> */}
-        {/* <ShoppingCartScreen /> */}
         <Navigator />
       </View>
     </Provider>
