@@ -18,11 +18,11 @@ export const ProductDetailsScreen = () => {
 
   const addToCart = () => {
     console.log('Add to cart');
-  }
+  };
 
   return (
     <View>
-      <ScrollView  style={{paddingBottom: 400}}>
+      <ScrollView style={{paddingBottom: 400}}>
         <FlatList
           data={product.images}
           renderItem={({item}) => (
@@ -54,11 +54,13 @@ const styles = StyleSheet.create({
     fontSize: 34,
     fontWeight: '500',
     marginVertical: 18,
+    color: '#4c4c4c',
   },
   price: {
     fontWeight: '500',
     fontSize: 16,
     letterSpacing: 1.5,
+    color: '#4c4c4c',
   },
   description: {
     marginVertical: 10,
@@ -66,6 +68,7 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     fontWeight: '300',
     marginBottom: 100,
+    color: '#4c4c4c',
   },
   button: {
     position: 'absolute',
