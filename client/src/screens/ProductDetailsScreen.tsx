@@ -11,11 +11,12 @@ import {
 } from 'react-native';
 import React from 'react';
 import products from '../data/products';
+import {useSelector} from 'react-redux';
 
 export const ProductDetailsScreen = () => {
-  const product = products[0];
   const {width} = useWindowDimensions();
-
+  const product = useSelector((state: any) => state.products.selectedProduct);
+  console.log("🚀 ~ ProductDetailsScreen ~ product:", product)
   const addToCart = () => {
     console.log('Add to cart');
   };
