@@ -6,18 +6,22 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useWindowDimensions,
   View,
 } from 'react-native';
 import React from 'react';
 import products from '../data/products';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {addToCart} from '../store/cartSlice';
 
 export const ProductDetailsScreen = () => {
+  const dispatch = useDispatch();
   const {width} = useWindowDimensions();
   const product = useSelector((state: any) => state.products.selectedProduct);
-  console.log("🚀 ~ ProductDetailsScreen ~ product:", product)
-  const addToCart = () => {
+  console.log('🚀 ~ ProductDetailsScreen ~ product:', product);
+  const addToCartFunction = () => {
+    dispatch(addToCart({product}));
     console.log('Add to cart');
   };
 
@@ -40,9 +44,9 @@ export const ProductDetailsScreen = () => {
           <Text style={styles.description}>{product.description}</Text>
         </View>
       </ScrollView>
-      <Pressable style={styles.button} onPress={addToCart}>
+      <TouchableOpacity style={styles.button} onPress={addToCartFunction}>
         <Text style={styles.buttonText}>Add to cart</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

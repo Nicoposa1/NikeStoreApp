@@ -5,15 +5,17 @@ import {ProductDetailsScreen} from '../screens/ProductDetailsScreen';
 import {ShoppingCartScreen} from '../screens/ShoppingCartScreen';
 import {Pressable, Text} from 'react-native';
 import CartIcon from '../assets/icons/cart.svg';
+import {useSelector} from 'react-redux';
+import { selectedNumberOfItems } from '../store/cartSlice';
 
 const Stack = createNativeStackNavigator();
 
 export const Navigator = () => {
+  const numberOfItems = useSelector(selectedNumberOfItems);
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{contentStyle: {backgroundColor: 'white'}}}
-      >
+        screenOptions={{contentStyle: {backgroundColor: 'white'}}}>
         <Stack.Screen
           name="Products"
           component={ProductsScreen}
@@ -27,7 +29,9 @@ export const Navigator = () => {
                 title="Cart"
                 color="gray">
                 <CartIcon width={18} height={18} />
-                <Text style={{marginLeft: 5, fontWeight: '500'}} >1</Text>
+                <Text style={{marginLeft: 5, fontWeight: '500'}}>
+                  {numberOfItems}
+                </Text>
               </Pressable>
             ),
           })}

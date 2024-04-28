@@ -1,12 +1,30 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
 import PlusIcon from '../assets/icons/plus.svg';
 import LessIcon from '../assets/icons/les.svg';
 import {CartItem} from '../interfaces/CartItem';
+import {useDispatch} from 'react-redux';
+import {changeQuantity} from '../store/cartSlice';
 
 export const CartListItem = ({cartItem}: {cartItem: CartItem}) => {
-  const increaseQuantity = () => {};
+  const dispatch = useDispatch();
+  const increaseQuantity = () => {
+    console.log('increaseQuantity');
+    dispatch(
+      changeQuantity({
+        productId: cartItem.product.id,
+        quantity: cartItem.quantity + 1,
+      }),
+    );
+  };
 
-  const decreaseQuantity = () => {};
+  const decreaseQuantity = () => {
+    dispatch(
+      changeQuantity({
+        productId: cartItem.product.id,
+        quantity: cartItem.quantity - 1,
+      }),
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -17,19 +35,14 @@ export const CartListItem = ({cartItem}: {cartItem: CartItem}) => {
         <Text style={styles.size}>Size {cartItem.size}</Text>
 
         <View style={styles.footer}>
-          <PlusIcon
-            onPress={decreaseQuantity}
-            color="gray"
-            height={20}
-            width={20}
-          />
+          <Pressable onPress={decreaseQuantity}>
+            <LessIcon color="gray" height={20} width={20} />
+          </Pressable>
           <Text style={styles.quantity}>{cartItem.quantity}</Text>
-          <LessIcon
-            onPress={increaseQuantity}
-            color="gray"
-            height={20}
-            width={20}
-          />
+          <Pressable onPress={increaseQuantity}>
+            <PlusIcon color="gray" height={20} width={20} />
+          </Pressable>
+
           <Text style={styles.itemTotal}>
             $ {cartItem.product.price * cartItem.quantity}
           </Text>
