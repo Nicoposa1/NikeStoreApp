@@ -1,11 +1,11 @@
-import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import PlusIcon from '../assets/icons/plus.svg';
 import LessIcon from '../assets/icons/les.svg';
-import {CartItem} from '../interfaces/CartItem';
-import {useDispatch} from 'react-redux';
-import {changeQuantity} from '../store/cartSlice';
+import { CartItem } from '../interfaces/CartItem';
+import { useDispatch } from 'react-redux';
+import { changeQuantity } from '../store/cartSlice';
 
-export const CartListItem = ({cartItem}: {cartItem: CartItem}) => {
+export const CartListItem = ({ cartItem }: { cartItem: CartItem }) => {
   const dispatch = useDispatch();
   const increaseQuantity = () => {
     console.log('increaseQuantity');
@@ -28,7 +28,7 @@ export const CartListItem = ({cartItem}: {cartItem: CartItem}) => {
 
   return (
     <View style={styles.container}>
-      <Image source={{uri: cartItem.product.image}} style={styles.image} />
+      <Image source={{ uri: cartItem.product.image }} style={styles.image} />
 
       <View style={styles.contentContainer}>
         <Text style={styles.name}>{cartItem.product.name}</Text>

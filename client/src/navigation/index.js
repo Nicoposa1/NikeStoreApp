@@ -6,7 +6,7 @@ import {ShoppingCartScreen} from '../screens/ShoppingCartScreen';
 import {Pressable, Text} from 'react-native';
 import CartIcon from '../assets/icons/cart.svg';
 import {useSelector} from 'react-redux';
-import { selectedNumberOfItems } from '../store/cartSlice';
+import {selectedNumberOfItems} from '../store/cartSlice';
 
 const Stack = createNativeStackNavigator();
 

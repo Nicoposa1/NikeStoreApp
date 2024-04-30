@@ -8,8 +8,8 @@ import {
   Alert,
 } from 'react-native';
 import cart from '../data/cart';
-import {CartListItem} from '../components/CartListItem';
-import {useSelector} from 'react-redux';
+import { CartListItem } from '../components/CartListItem';
+import { useSelector } from 'react-redux';
 import {
   selectDeliveryPrice,
   selectSubtotal,
@@ -46,7 +46,7 @@ export const ShoppingCartScreen = () => {
     <>
       <FlatList
         data={cartItems}
-        renderItem={({item}) => <CartListItem cartItem={item} />}
+        renderItem={({ item }) => <CartListItem cartItem={item} />}
         ListFooterComponent={<ShoppingCartTotals />}
       />
       <Pressable style={styles.button}>

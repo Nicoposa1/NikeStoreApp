@@ -1,5 +1,5 @@
-import {createSelector, createSlice} from '@reduxjs/toolkit';
-import {CartItem} from '../interfaces/CartItem';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { CartItem } from '../interfaces/CartItem';
 
 const initialState = {
   items: [] as CartItem[],
@@ -20,11 +20,11 @@ const cartSlice = createSlice({
       if (cartItem) {
         cartItem.quantity += 1;
       } else {
-        state.items.push({product: newProduct, quantity: 1});
+        state.items.push({ product: newProduct, quantity: 1 });
       }
     },
     changeQuantity: (state, action) => {
-      const {productId, quantity} = action.payload;
+      const { productId, quantity } = action.payload;
       const cartItem = state.items.find(item => item.product.id === productId);
       if (cartItem) {
         cartItem.quantity = quantity;
@@ -37,7 +37,7 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-export const {addToCart, changeQuantity} = cartSlice.actions;
+export const { addToCart, changeQuantity } = cartSlice.actions;
 
 export const selectedNumberOfItems = (state: any) => state.cart.items.length;
 export const selectSubtotal = (state: any) =>

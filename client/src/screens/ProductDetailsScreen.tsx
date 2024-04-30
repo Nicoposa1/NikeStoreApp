@@ -1,8 +1,6 @@
 import {
-  Dimensions,
   FlatList,
   Image,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,34 +9,32 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import products from '../data/products';
-import {useSelector, useDispatch} from 'react-redux';
-import {addToCart} from '../store/cartSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../store/cartSlice';
 
 export const ProductDetailsScreen = () => {
   const dispatch = useDispatch();
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const product = useSelector((state: any) => state.products.selectedProduct);
   console.log('🚀 ~ ProductDetailsScreen ~ product:', product);
   const addToCartFunction = () => {
-    dispatch(addToCart({product}));
-    console.log('Add to cart');
+    dispatch(addToCart({ product }));
   };
 
   return (
     <View>
-      <ScrollView style={{paddingBottom: 400}}>
+      <ScrollView style={{ paddingBottom: 400 }}>
         <FlatList
           data={product.images}
-          renderItem={({item}) => (
-            <Image source={{uri: item}} style={{width, aspectRatio: 1}} />
+          renderItem={({ item }) => (
+            <Image source={{ uri: item }} style={{ width, aspectRatio: 1 }} />
           )}
           keyExtractor={item => item.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled
         />
-        <View style={{padding: 20}}>
+        <View style={{ padding: 20 }}>
           <Text style={styles.title}>{product.name}</Text>
           <Text style={styles.price}>{product.price}</Text>
           <Text style={styles.description}>{product.description}</Text>
