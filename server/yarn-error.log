@@ -1,0 +1,49 @@
+Arguments: 
+  /Users/nicolasposa/.nvm/versions/node/v22.0.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add --dev prettier
+
+PATH: 
+  /Users/nicolasposa/development/flutter/bin:/Users/nicolasposa/.rbenv/shims:/Users/nicolasposa/.rbenv/shims:/Users/nicolasposa/.rbenv/bin:/Users/nicolasposa/.nvm/versions/node/v22.0.0/bin:/Library/Frameworks/Python.framework/Versions/3.12/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Users/nicolasposa/anaconda3/bin:/Users/nicolasposa/anaconda3/condabin:/Users/nicolasposa/development/flutter/bin:/Users/nicolasposa/.rbenv/shims:/Users/nicolasposa/.rbenv/bin:/Users/nicolasposa/.nvm/versions/node/v20.11.1/bin:/Library/Frameworks/Python.framework/Versions/3.12/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/mysql-8.2.0-macos13-arm64/bin:/Users/nicolasposa/Library/Android/sdk/emulator:/Users/nicolasposa/Library/Android/sdk/platform-tools:/usr/local/mysql-8.2.0-macos13-arm64/bin:/Users/nicolasposa/Library/Android/sdk/emulator:/Users/nicolasposa/Library/Android/sdk/platform-tools
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  22.0.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  SyntaxError: /Users/nicolasposa/Documents/projects/NikeStoreApp/server/package.json: Expected double-quoted property name in JSON at position 163 (line 8 column 3)
+      at JSON.parse (<anonymous>)
+      at /opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:310:30)
+      at /opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "nodemon": "^3.1.0"
+    },
+    "dependencies": {
+      "express": "^4.19.2"
+    }
+  
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
