@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
-router.get("/", (req, res) => {
-  res.send("<h1>get all products!</h1>");
+const { getAllProducts, getOneProduct } = require("./database/products");
+router.get("/", async (req, res) => {
+  const products = await getAllProducts();
+  console.log("🚀 ~ router.get ~ products:", products);
+  res.send({ status: "OK", data: products });
 });
 
 router.get("/:productId", (req, res) => {
