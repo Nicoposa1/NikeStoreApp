@@ -18,7 +18,8 @@ router.post("/", async (req, res) => {
   orderData.ref = ref;
 
   const newOrder = await createOrder(orderData);
-  res.send({ status: "OK", data: newOrder });
+
+  res.status(201).send({ status: "OK", data: newOrder });
 });
 
 module.exports = router;
