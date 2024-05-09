@@ -11,21 +11,32 @@ import {
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
+import { useGetProductQuery } from '../store/apiSlice';
 
 export const ProductDetailsScreen = () => {
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const product = useSelector((state: any) => state.products.selectedProduct);
-  console.log('🚀 ~ ProductDetailsScreen ~ product:', product);
+  console.log("🚀 ~ ProductDetailsScreen ~ product:", product)
   const addToCartFunction = () => {
     dispatch(addToCart({ product }));
   };
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>Error: error fetching data</Text>;
+  }
+
+  const productSelected = data.data;
 
   return (
     <View>
       <ScrollView style={{ paddingBottom: 400 }}>
         <FlatList
-          data={product.images}
+          data={productSelected.images}
           renderItem={({ item }) => (
             <Image source={{ uri: item }} style={{ width, aspectRatio: 1 }} />
           )}
