@@ -15,6 +15,7 @@ import {
   selectSubtotal,
   selectTotal,
 } from '../store/cartSlice';
+import { useCreateOrderMutation } from '../store/apiSlice';
 
 const ShoppingCartTotals = () => {
   const cartItems = useSelector((state: any) => state.cart);
@@ -42,6 +43,21 @@ const ShoppingCartTotals = () => {
 export const ShoppingCartScreen = () => {
   const cartItems = useSelector((state: any) => state.cart.items);
   console.log('🚀 ~ ShoppingCartScreen ~ cartItem:', cartItems);
+
+  const onCreateOrder = async () => {
+    const result = await useCreateOrderMutation({
+      items: cartItems, 
+      subtotal,
+      deleveryPrice,
+      total,
+    })
+
+    if(result.data?.status === 'success') {
+      Alert.alert('Order created successfully')
+    }
+
+  }
+
   return (
     <>
       <FlatList

@@ -3,7 +3,6 @@ const router = express.Router();
 const { getAllProducts, getOneProduct } = require("../database/products");
 router.get("/", async (req, res) => {
   const products = await getAllProducts();
-  console.log("🚀 ~ router.get ~ products:", products);
   res.send({ status: "OK", data: products });
 });
 

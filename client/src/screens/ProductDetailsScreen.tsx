@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   ScrollView,
@@ -13,30 +14,39 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
 import { useGetProductQuery } from '../store/apiSlice';
 
-export const ProductDetailsScreen = () => {
+export const ProductDetailsScreen = ({ route }: { route: any }) => {
+  const id = route.params.id
+
+
+  const { data, isLoading, error } = useGetProductQuery(id);
+
   const dispatch = useDispatch();
+
   const { width } = useWindowDimensions();
-  const product = useSelector((state: any) => state.products.selectedProduct);
-  console.log("🚀 ~ ProductDetailsScreen ~ product:", product)
   const addToCartFunction = () => {
     dispatch(addToCart({ product }));
   };
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <ActivityIndicator size="large" color="#000" />
   }
 
   if (error) {
-    return <Text>Error: error fetching data</Text>;
+    return <Text>Error: error fetching data {error.error}</Text>
   }
 
-  const productSelected = data.data;
+  
+  const product = data.data
+  
+  if (!product) {
+    return null
+  }
 
   return (
     <View>
       <ScrollView style={{ paddingBottom: 400 }}>
         <FlatList
-          data={productSelected.images}
+          data={product.images}
           renderItem={({ item }) => (
             <Image source={{ uri: item }} style={{ width, aspectRatio: 1 }} />
           )}
