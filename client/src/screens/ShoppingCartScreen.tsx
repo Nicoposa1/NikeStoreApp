@@ -6,6 +6,7 @@ import {
   Pressable,
   ActivityIndicator,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import cart from '../data/cart';
 import { CartListItem } from '../components/CartListItem';
@@ -42,20 +43,24 @@ const ShoppingCartTotals = () => {
 
 export const ShoppingCartScreen = () => {
   const cartItems = useSelector((state: any) => state.cart.items);
-  console.log('🚀 ~ ShoppingCartScreen ~ cartItem:', cartItems);
+  const subtotal = useSelector(selectSubtotal);
+  const deliveryFree = useSelector(selectDeliveryPrice);
+  const total = useSelector(selectTotal);
 
-  const onCreateOrder = async () => {
-    const result = await useCreateOrderMutation({
-      items: cartItems, 
+  const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
+
+  const onCreateOrder = () => {
+    createOrder({
+      items: cartItems,
       subtotal,
-      deleveryPrice,
+      deliveryFree,
       total,
-    })
-
-    if(result.data?.status === 'success') {
-      Alert.alert('Order created successfully')
-    }
-
+      customer: {
+        name: 'John Doe',
+        address: '123 Main St',
+        email: 'nico@gmail.com',
+      },  
+    });
   }
 
   return (
@@ -65,9 +70,9 @@ export const ShoppingCartScreen = () => {
         renderItem={({ item }) => <CartListItem cartItem={item} />}
         ListFooterComponent={<ShoppingCartTotals />}
       />
-      <Pressable style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={onCreateOrder}>
         <Text style={styles.buttonText}>Checkout</Text>
-      </Pressable>
+      </TouchableOpacity>
     </>
   );
 };

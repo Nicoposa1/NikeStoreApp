@@ -11,7 +11,7 @@ export const CartListItem = ({ cartItem }: { cartItem: CartItem }) => {
     console.log('increaseQuantity');
     dispatch(
       changeQuantity({
-        productId: cartItem.product.id,
+        productId: cartItem.product._id,
         quantity: cartItem.quantity + 1,
       }),
     );
@@ -20,7 +20,7 @@ export const CartListItem = ({ cartItem }: { cartItem: CartItem }) => {
   const decreaseQuantity = () => {
     dispatch(
       changeQuantity({
-        productId: cartItem.product.id,
+        productId: cartItem.product._id,
         quantity: cartItem.quantity - 1,
       }),
     );
