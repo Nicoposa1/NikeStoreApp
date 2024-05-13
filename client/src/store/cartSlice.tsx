@@ -33,11 +33,16 @@ const cartSlice = createSlice({
         state.items = state.items.filter(item => item.product.id !== productId);
       }
     },
+    clearCart: state => {
+      state.items = [
+        ...state.items.filter(item => item.quantity <= 0),
+      ]
+    }
   },
 });
 
 export default cartSlice.reducer;
-export const { addToCart, changeQuantity } = cartSlice.actions;
+export const { addToCart, changeQuantity, clearCart } = cartSlice.actions;
 
 export const selectedNumberOfItems = (state: any) => state.cart.items.length;
 export const selectSubtotal = (state: any) =>

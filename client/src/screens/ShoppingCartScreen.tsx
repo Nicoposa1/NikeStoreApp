@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import cart from '../data/cart';
 import { CartListItem } from '../components/CartListItem';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
+  clearCart,
   selectDeliveryPrice,
   selectSubtotal,
   selectTotal,
@@ -48,9 +49,10 @@ export const ShoppingCartScreen = () => {
   const total = useSelector(selectTotal);
 
   const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
-
-  const onCreateOrder = () => {
-    createOrder({
+  const dispatch = useDispatch();
+  const onCreateOrder = async () => {
+    console.log('Creating order...');
+    const result = await createOrder({
       items: cartItems,
       subtotal,
       deliveryFree,
@@ -59,8 +61,16 @@ export const ShoppingCartScreen = () => {
         name: 'John Doe',
         address: '123 Main St',
         email: 'nico@gmail.com',
-      },  
+      },
     });
+    if (result.data?.status === 'OK') {
+      Alert.alert('Order created successfully',
+        `Your order reference is ${result.data.data.ref}`
+      );
+      dispatch(clearCart());
+    } else {
+      Alert.alert('Error creating order', 'Please try again later');
+    }
   }
 
   return (
@@ -71,7 +81,9 @@ export const ShoppingCartScreen = () => {
         ListFooterComponent={<ShoppingCartTotals />}
       />
       <TouchableOpacity style={styles.button} onPress={onCreateOrder}>
-        <Text style={styles.buttonText}>Checkout</Text>
+        {
+          isLoading ? <ActivityIndicator color="white" /> : <Text style={styles.buttonText}>Checkout</Text>
+        }
       </TouchableOpacity>
     </>
   );
