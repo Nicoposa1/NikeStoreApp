@@ -3,10 +3,20 @@ import React from 'react'
 import { InputComponent } from '../components/InputComponent'
 import NikeLogo from '../assets/icons/nike2.svg'
 import { ButtonComponent } from '../components/ButtonComponent'
+import { signInWithEmailPassword } from '../services/atuthService'
 
 export const LoginScreen = () => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailPassword(email, password)
+      console.log('Logged in')
+    } catch (e) {
+      console.log(e)
+    }
+  }
   return (
     <View style={styles.container}>
       <NikeLogo
@@ -28,6 +38,7 @@ export const LoginScreen = () => {
         />
         <ButtonComponent
           text="Login"
+          onPress={handleLogin}
         />
         <View style={{
           flexDirection: 'row',
@@ -37,7 +48,7 @@ export const LoginScreen = () => {
             Don't have an account?
           </Text>
           <TouchableOpacity>
-            <Text style={{color: 'blue'}}>
+            <Text style={{ color: 'blue' }}>
               {' '}Sign up
             </Text>
           </TouchableOpacity>

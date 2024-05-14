@@ -1,9 +1,14 @@
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
-export const ButtonComponent = ({ text }: { text: String }) => {
+export const ButtonComponent = ({ text, onPress }: {
+  text: String,
+  onPress: () => void
+}) => {
   return (
-    <TouchableOpacity style={styles.btn}>
+    <TouchableOpacity style={styles.btn}
+      onPress={onPress}
+    >
       <Text style={styles.btnText}>{text}</Text>
     </TouchableOpacity>
   )
@@ -11,7 +16,7 @@ export const ButtonComponent = ({ text }: { text: String }) => {
 
 
 const styles = StyleSheet.create({
-  btn:{
+  btn: {
     backgroundColor: 'black',
     padding: 10,
     borderRadius: 30,
