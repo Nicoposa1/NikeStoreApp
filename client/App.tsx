@@ -9,12 +9,14 @@ import {StatusBar, View} from 'react-native';
 import {Navigator} from './src/navigation';
 import {Provider} from 'react-redux';
 import {store} from './src/store';
+import { LoginScreen } from './src/screens/LoginScreen';
 
 function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <StatusBar />
-      <Navigator />
+      {/* <Navigator /> */}
+      <LoginScreen />
     </Provider>
   );
 }
