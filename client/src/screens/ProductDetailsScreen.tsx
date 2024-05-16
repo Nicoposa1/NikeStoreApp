@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
 import { useGetProductQuery } from '../store/apiSlice';
 
@@ -32,12 +32,12 @@ export const ProductDetailsScreen = ({ route }: { route: any }) => {
   }
 
   if (error) {
-    return <Text>Error: error fetching data {error.error}</Text>
+    return <Text>Error: error fetching data {error?.error}</Text>
   }
 
-  
+
   const product = data.data
-  
+
   if (!product) {
     return null
   }
