@@ -1,20 +1,11 @@
 import { FlatList, Image, StyleSheet, Pressable, ActivityIndicator, Text } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { productsSlice } from '../store/productsSlice';
 import { useGetProductsQuery } from '../store/apiSlice';
-
-type ProductDetailsParams = {
-  name: string;
-  id: string; // Assuming item._id is of type string
-};
-
 
 
 export const ProductsScreen = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const { data, isLoading, error } = useGetProductsQuery(undefined);
 
