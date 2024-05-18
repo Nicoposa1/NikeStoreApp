@@ -13,7 +13,8 @@ export const InputComponent = ({ placeholder, value, onChangeText }: {
         placeholder={placeholder}
         onChangeText={onChangeText}
         value={value}
-        keyboardType={placeholder === 'Email' ? 'email-address' : 'default'}
+        keyboardType={placeholder === 'Email' ? 'email-address' : 'visible-password'}
+        secureTextEntry={placeholder === 'Password' ? true : false}
       />
     </View>
   )
