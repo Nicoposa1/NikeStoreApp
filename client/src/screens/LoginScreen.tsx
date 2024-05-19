@@ -4,10 +4,15 @@ import { InputComponent } from '../components/InputComponent'
 import NikeLogo from '../assets/icons/nike2.svg'
 import { ButtonComponent } from '../components/ButtonComponent'
 import { signInWithEmailPassword } from '../services/atuthService'
+import {authentication} from '../firebase/config'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
 export const LoginScreen = () => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [error, setError] = React.useState('')
+  const [loggedInUser, setLoggedInUser] = React.useState<any>(null)
 
   const handleLogin = async () => {
     try {
@@ -17,6 +22,25 @@ export const LoginScreen = () => {
       console.log(e)
     }
   }
+
+
+  const handleSignIn = async (email: string, password: string) => {
+    setIsLoading(true);
+
+    signInWithEmailAndPassword(authentication, email, password)
+      .then((res) => {
+        console.log("successful");
+        setLoggedInUser(res.user);
+      })
+
+      .catch((err) => {
+        console.log(err);
+        setError("Incorrect Email/Password");
+      })
+
+      .finally(() => setIsLoading(false));
+  };
+
   return (
     <View style={styles.container}>
       <NikeLogo
@@ -38,7 +62,7 @@ export const LoginScreen = () => {
         />
         <ButtonComponent
           text="Login"
-          onPress={handleLogin}
+          onPress={() => handleSignIn(email, password)}
         />
         <View style={{
           flexDirection: 'row',
