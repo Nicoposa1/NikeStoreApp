@@ -1,11 +1,14 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { InputComponent } from '../components/InputComponent'
 import NikeLogo from '../assets/icons/nike2.svg'
 import { ButtonComponent } from '../components/ButtonComponent'
-import { signInWithEmailPassword } from '../services/atuthService'
-import {authentication} from '../firebase/config'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+// import { createUserEmailAndPassword, signInWithEmailPassword } from '../services/atuthService'
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../firebase/config'
+import { useDispatch, useSelector } from 'react-redux'
+import { setToken } from '../store/authSlice'
+
 
 export const SignUpScreen = () => {
   const [email, setEmail] = React.useState('')
@@ -14,23 +17,22 @@ export const SignUpScreen = () => {
   const [error, setError] = React.useState('')
   const [loggedInUser, setLoggedInUser] = React.useState<any>(null)
 
-  const handleLogin = async () => {
-    try {
-      await signInWithEmailPassword(email, password)
-      console.log('Logged in')
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  const dispatch = useDispatch();
+
+  const {token} = useSelector((state: any) => state.auth);
+  console.log("🚀 ~ SignUpScreen ~ token:", token)
 
 
-  const handleSignIn = async (email: string, password: string) => {
+  const onHandleSignup = async () => {
     setIsLoading(true);
 
-    signInWithEmailAndPassword(authentication, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        console.log("successful");
+        console.log(res.user.stsTokenManager.accessToken);
+        console.log(res.user);
         setLoggedInUser(res.user);
+
+        dispatch(setToken(res.user.stsTokenManager.accessToken));
       })
 
       .catch((err) => {
@@ -39,7 +41,8 @@ export const SignUpScreen = () => {
       })
 
       .finally(() => setIsLoading(false));
-  };
+  }
+  
 
   return (
     <View style={styles.container}>
@@ -62,7 +65,7 @@ export const SignUpScreen = () => {
         />
         <ButtonComponent
           text="Login"
-          onPress={() => handleSignIn(email, password)}
+          onPress={onHandleSignup}
         />
         <View style={{
           flexDirection: 'row',
