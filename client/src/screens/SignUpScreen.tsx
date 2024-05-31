@@ -20,7 +20,6 @@ export const SignUpScreen = () => {
   const dispatch = useDispatch();
 
   const {token} = useSelector((state: any) => state.auth);
-  console.log("🚀 ~ SignUpScreen ~ token:", token)
 
 
   const onHandleSignup = async () => {
@@ -28,8 +27,6 @@ export const SignUpScreen = () => {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        console.log(res.user.stsTokenManager.accessToken);
-        console.log(res.user);
         setLoggedInUser(res.user);
 
         dispatch(setToken(res.user.stsTokenManager.accessToken));
