@@ -4,15 +4,18 @@ import { InputComponent } from '../components/InputComponent'
 import NikeLogo from '../assets/icons/nike2.svg'
 import { ButtonComponent } from '../components/ButtonComponent'
 import { signInWithEmailPassword } from '../services/atuthService'
-import {authentication} from '../firebase/config'
+import { authentication } from '../firebase/config'
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
 
 export const LoginScreen = () => {
-  const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [email, setEmail] = React.useState('')
   const [isLoading, setIsLoading] = React.useState(false)
   const [error, setError] = React.useState('')
   const [loggedInUser, setLoggedInUser] = React.useState<any>(null)
+  const navigation = useNavigation()
 
   const handleLogin = async () => {
     try {
@@ -24,21 +27,24 @@ export const LoginScreen = () => {
   }
 
 
-  const handleSignIn = async (email: string, password: string) => {
+  const handleSignIn = async (email, password) => {
     setIsLoading(true);
 
-    signInWithEmailAndPassword(authentication, email, password)
-      .then((res) => {
-        console.log("successful");
-        setLoggedInUser(res.user);
-      })
+    try {
+      const res = await signInWithEmailAndPassword(authentication, email, password);
+      console.log("Login successful");
+      setLoggedInUser(res.user);
 
-      .catch((err) => {
-        console.log(err);
-        setError("Incorrect Email/Password");
-      })
+      // Guardar el token en AsyncStorage
+      await AsyncStorage.setItem('@storage_Key', res.user.stsTokenManager.accessToken);
 
-      .finally(() => setIsLoading(false));
+      console.log('Token stored in AsyncStorage');
+    } catch (err) {
+      console.log(err);
+      setError("Incorrect Email/Password");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -71,7 +77,9 @@ export const LoginScreen = () => {
           <Text>
             Don't have an account?
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Register')}
+          >
             <Text style={{ color: 'blue' }}>
               {' '}Sign up
             </Text>

@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ProductsScreen} from '../screens/ProductsScreen';
@@ -7,17 +8,37 @@ import {Pressable, Text} from 'react-native';
 import CartIcon from '../assets/icons/cart.svg';
 import {useSelector} from 'react-redux';
 import {selectedNumberOfItems} from '../store/cartSlice';
-import { LoginScreen } from '../screens/LoginScreen';
-import { SignUpScreen } from '../screens/SignUpScreen';
+import {LoginScreen} from '../screens/LoginScreen';
+import {SignUpScreen} from '../screens/SignUpScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createRef } from 'react';
 
 const Stack = createNativeStackNavigator();
 
 export const Navigator = () => {
+  const navigationRef = createRef(null);
   const numberOfItems = useSelector(selectedNumberOfItems);
-  const {token} = useSelector((state: any) => state.auth);
-  console.log("🚀 ~ Navigator ~ token:", token)
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const value = await AsyncStorage.getItem('@storage_Key');
+        if (value !== null) {
+          setToken(value);
+        }
+      } catch (error) {
+        console.error('Error fetching token:', error);
+      }
+    };
+
+    fetchToken();
+  }, []);
+
+  console.log('🚀 ~ Navigator ~ token:', token);
+
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         screenOptions={{contentStyle: {backgroundColor: 'white'}}}>
         {token ? (

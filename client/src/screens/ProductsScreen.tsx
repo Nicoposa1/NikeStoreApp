@@ -8,14 +8,28 @@ export const ProductsScreen = () => {
   const navigation = useNavigation();
 
   const { data, isLoading, error } = useGetProductsQuery(undefined);
+  console.log("🚀 ~ ProductsScreen ~ error:", error)
 
+  const getProducts = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/products');
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  React.useEffect(() => {
+    getProducts();
+  }, []);
 
   if (isLoading) {
     return <ActivityIndicator size="large" color="#000" />
   }
 
   if (error) {
-    return <Text>Error: error fetching data</Text>
+    return <Text>Error: error fetching data P</Text>
   }
 
 

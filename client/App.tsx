@@ -5,19 +5,16 @@
  * @format
  */
 import React from 'react';
-import {StatusBar, View} from 'react-native';
-import {Navigator} from './src/navigation';
-import {Provider} from 'react-redux';
-import {store} from './src/store';
-import { LoginScreen } from './src/screens/LoginScreen';
-import { SignUpScreen } from './src/screens/SignUpScreen';
+import { StatusBar } from 'react-native';
+import { Navigator } from './src/navigation';
+import { Provider } from 'react-redux';
+import { store } from './src/store';
 
 function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <StatusBar />
-      {/* <Navigator /> */}
-      <SignUpScreen />
+      <Navigator />
     </Provider>
   );
 }

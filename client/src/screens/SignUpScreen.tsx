@@ -1,45 +1,48 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { InputComponent } from '../components/InputComponent'
-import NikeLogo from '../assets/icons/nike2.svg'
-import { ButtonComponent } from '../components/ButtonComponent'
-// import { createUserEmailAndPassword, signInWithEmailPassword } from '../services/atuthService'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { InputComponent } from '../components/InputComponent';
+import NikeLogo from '../assets/icons/nike2.svg';
+import { ButtonComponent } from '../components/ButtonComponent';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../firebase/config'
-import { useDispatch, useSelector } from 'react-redux'
-import { setToken } from '../store/authSlice'
-
+import { auth } from '../firebase/config';
+import { useDispatch } from 'react-redux';
+import { setToken } from '../store/authSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 export const SignUpScreen = () => {
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [isLoading, setIsLoading] = React.useState(false)
-  const [error, setError] = React.useState('')
-  const [loggedInUser, setLoggedInUser] = React.useState<any>(null)
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
+  const [loggedInUser, setLoggedInUser] = React.useState(null);
 
   const dispatch = useDispatch();
-
-  const {token} = useSelector((state: any) => state.auth);
-
+  const navigation = useNavigation();
 
   const onHandleSignup = async () => {
     setIsLoading(true);
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        setLoggedInUser(res.user);
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      setLoggedInUser(res.user);
 
-        dispatch(setToken(res.user.stsTokenManager.accessToken));
-      })
+      // Guarda el token en AsyncStorage
+      await AsyncStorage.setItem("@storage_Key", res.user.stsTokenManager.accessToken);
+      dispatch(setToken(res.user.stsTokenManager.accessToken));
 
-      .catch((err) => {
-        console.log(err);
-        setError("Incorrect Email/Password");
-      })
-
-      .finally(() => setIsLoading(false));
-  }
-  
+      // Navega al Home
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Products' }],
+      });
+    } catch (err) {
+      console.log(err);
+      setError("Error creating account");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -47,7 +50,7 @@ export const SignUpScreen = () => {
         width={200}
         height={200}
         fill={'#000'}
-        style={{ marginTop: 100, }}
+        style={{ marginTop: 100 }}
       />
       <View style={styles.inputContainer}>
         <InputComponent
@@ -61,38 +64,32 @@ export const SignUpScreen = () => {
           onChangeText={setPassword}
         />
         <ButtonComponent
-          text="Login"
+          text="Sign up"
           onPress={onHandleSignup}
         />
-        <View style={{
-          flexDirection: 'row',
-          marginTop: 20
-        }}>
-          <Text>
-            Don't have an account?
-          </Text>
-          <TouchableOpacity>
-            <Text style={{ color: 'blue' }}>
-              {' '}Sign up
-            </Text>
+        {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
+        <View style={{ flexDirection: 'row', marginTop: 20 }}>
+          <Text>Already have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={{ color: 'blue' }}> Login</Text>
           </TouchableOpacity>
         </View>
       </View>
     </View>
-  )
+  );
 }
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
   inputContainer: {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: .6,
+    flex: 0.6,
     height: 10,
   }
-})
+});
