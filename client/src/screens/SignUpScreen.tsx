@@ -28,8 +28,9 @@ export const SignUpScreen = () => {
       setLoggedInUser(res.user);
 
       // Guarda el token en AsyncStorage
-      await AsyncStorage.setItem("@storage_Key", res.user.stsTokenManager.accessToken);
-      dispatch(setToken(res.user.stsTokenManager.accessToken));
+      const idToken = await res.user.getIdToken();
+      await AsyncStorage.setItem("@storage_Key", idToken);
+      dispatch(setToken(idToken));
 
       // Navega al Home
       navigation.reset({
