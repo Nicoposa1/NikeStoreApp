@@ -74,26 +74,6 @@ export const ShoppingCartScreen = () => {
       Alert.alert('Error creating order', 'Please try again later');
     }
   }
-  const navigation = useNavigation();
-  const signOut = async () => {
-
-    try {
-      // Borrar el token de autenticación de AsyncStorage
-      await AsyncStorage.removeItem('@storage_Key');
-      // Limpiar cualquier otra información de usuario almacenada
-      // ...
-      // Navegar de vuelta a la pantalla de inicio de sesión
-      navigation.navigate('Login');
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-    }
-  };
-  
-  // En tu componente, puedes llamar a esta función pasando la referencia de navegación como un argumento:
-  const handleSignOut = () => {
-    const navigation = useNavigation();
-    signOut(navigation);
-  };
 
   return (
     <>
@@ -102,7 +82,7 @@ export const ShoppingCartScreen = () => {
         renderItem={({ item }) => <CartListItem cartItem={item} />}
         ListFooterComponent={<ShoppingCartTotals />}
       />
-      <TouchableOpacity style={styles.button} onPress={signOut}>
+      <TouchableOpacity style={styles.button} onPress={onCreateOrder}>
         {
           isLoading ? <ActivityIndicator color="white" /> : <Text style={styles.buttonText}>Checkout</Text>
         }
