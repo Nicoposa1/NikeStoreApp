@@ -1,49 +1,24 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 import { InputComponent } from '../components/InputComponent'
 import NikeLogo from '../assets/icons/nike2.svg'
 import { ButtonComponent } from '../components/ButtonComponent'
 import { signInWithEmailPassword } from '../services/atuthService'
-import { authentication } from '../firebase/config'
+import { auth } from '../firebase/config'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 
 export const LoginScreen = () => {
-  const [password, setPassword] = React.useState('')
-  const [email, setEmail] = React.useState('')
-  const [isLoading, setIsLoading] = React.useState(false)
-  const [error, setError] = React.useState('')
-  const [loggedInUser, setLoggedInUser] = React.useState<any>(null)
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
-    try {
-      await signInWithEmailPassword(email, password)
-      console.log('Logged in')
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-
-  const handleSignIn = async (email, password) => {
-    setIsLoading(true);
-
-    try {
-      const res = await signInWithEmailAndPassword(authentication, email, password);
-      console.log("Login successful");
-      setLoggedInUser(res.user);
-
-      // Guardar el token en AsyncStorage
-      await AsyncStorage.setItem('@storage_Key', res.user.stsTokenManager.accessToken);
-
-      console.log('Token stored in AsyncStorage');
-    } catch (err) {
-      console.log(err);
-      setError("Incorrect Email/Password");
-    } finally {
-      setIsLoading(false);
+  const onHandleLogin = () => {
+    if (email !== '' && password !== '') {
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => console.log('Login success'))
+        .catch((err) => Alert.alert('Login error', err.message));
     }
   };
 
@@ -68,7 +43,7 @@ export const LoginScreen = () => {
         />
         <ButtonComponent
           text="Login"
-          onPress={() => handleSignIn(email, password)}
+          onPress={() => onHandleLogin()}
         />
         <View style={{
           flexDirection: 'row',

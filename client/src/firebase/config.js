@@ -1,9 +1,6 @@
-import {initializeApp, getApp} from 'firebase/app';
-import {
-  initializeAuth,
-  getAuth,
-  getReactNativePersistence,
-} from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from "firebase/auth"
+import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -15,9 +12,7 @@ const firebaseConfig = {
 };
 
 // initialize Firebase App
-const app = initializeApp(firebaseConfig);
-const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(),
-})
 
-export {app, auth, getApp, getAuth};
+initializeApp(firebaseConfig);
+export const auth = getAuth();
+export const database = getFirestore()

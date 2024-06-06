@@ -17,7 +17,7 @@ export const ButtonComponent = ({ text, onPress }: {
 
 const styles = StyleSheet.create({
   btn: {
-    backgroundColor: 'black',
+    backgroundColor: '#000',
     padding: 10,
     borderRadius: 30,
     width: Dimensions.get('window').width * 0.8,

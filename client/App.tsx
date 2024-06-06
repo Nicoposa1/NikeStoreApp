@@ -1,22 +1,17 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+// App.js
 import React from 'react';
-import { StatusBar } from 'react-native';
-import { Navigator } from './src/navigation';
 import { Provider } from 'react-redux';
 import { store } from './src/store';
+import Navigator, { AuthenticatedUserProvider } from './src/navigation';
 
-function App(): React.JSX.Element {
+const App = () => {
   return (
     <Provider store={store}>
-      <StatusBar />
-      <Navigator />
+      <AuthenticatedUserProvider>
+        <Navigator />
+      </AuthenticatedUserProvider>
     </Provider>
   );
-}
+};
 
 export default App;
