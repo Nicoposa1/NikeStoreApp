@@ -69,7 +69,8 @@ export const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
   inputContainer: {
     width: '100%',
